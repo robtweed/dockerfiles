@@ -1,0 +1,16 @@
+cd ~/Dockerfiles/qewd-server
+
+docker build --no-cache -t rtweed/qewd-server-rpi .
+
+docker push rtweed/qewd-server-rpi
+
+
+
+Cleardown:
+
+docker system prune
+
+docker stop $(docker ps -a -q)
+docker rm $(docker ps -a -q)
+docker rmi $(docker images -q)
+

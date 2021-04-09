@@ -1,0 +1,6 @@
+cd ~/Dockerfiles/qewd-server
+
+sudo docker build --no-cache -t rtweed/qewd-server .
+
+sudo docker push rtweed/qewd-server
+

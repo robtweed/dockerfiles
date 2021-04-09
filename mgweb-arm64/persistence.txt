@@ -1,0 +1,41 @@
+# To Persist your YottaDB Data Between Container Restarts
+
+Copy *~/mgweb-conduit/start_copy_ydb* to *start*
+
+        cp ~/mgweb-conduit/start_copy_ydb ~/mgweb-conduit/start
+
+Start the Container as normal:
+
+        docker run -it --name conduit --rm -p 3000:8080 -v /home/pi/mgweb-conduit:/opt/mgweb/mapped rtweed/mgweb-rpi
+
+You should see this at the start of the output from the Container:
+
+        Running user customisation start file
+        YottaDB Global Directory files copied
+
+
+Shut down the Container with CTRL & C
+
+Delete the *start* file you created previously, to prevent it being re-used next time you start the Container:
+
+        rm ~/mgweb-conduit/start
+
+If you look in the host directory *~/mgweb-conduit*, you should now see a new sub-directory
+named *ydb130*. Move this to its own directory, eg:
+
+        sudo mv ~/mgweb-conduit/ydb130 ~/ydb130
+
+Change the file permissions for use by Apache within the Container:
+
+        sudo chown -R www-data:www-data ~/ydb130
+
+
+From now on you can map this volume into the Container.  Make sure you map it
+to the Container's */opt/yottadb* directory, eg:
+
+        docker run -it --name conduit --rm -p 3000:8080 -v /home/pi/mgweb-conduit:/opt/mgweb/mapped -v /home/pi/ydb130:/opt/yottadb rtweed/mgweb-rpi
+
+and it will persist any YottaDB data into this host directory so it will be there again each time you restart the Container.
+
+
+
