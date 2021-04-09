@@ -1,0 +1,12 @@
+To run in foreground with no persistence:
+ - configuration is on host in ~/redis
+
+docker run -it --rm --name qewd_redis -p 8080:8080 -v /home/rtweed/redis:/opt/qewd/mapped rtweed/qewd-redis
+
+
+To run in foreground with persistence:
+ - configuration is on host in ~/redis
+ - data (dump.rdb) and log (redis_6379.log) written to host at ~/redis_data
+
+docker run -it --rm --name qewd_redis -p 8080:8080 -v /home/rtweed/redis:/opt/qewd/mapped -v /home/rtweed/redis_data:/var/redis/6379 rtweed/qewd-redis
+
